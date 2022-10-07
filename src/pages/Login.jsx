@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { loginAction } from '../redux/actions';
+import { setItem } from '../services/localStorageFuncs';
 
 class Login extends Component {
   state = {
@@ -26,11 +27,25 @@ class Login extends Component {
     });
   };
 
+  fetchApi = async () => {
+    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const { token } = await response.json();
+    setItem('token', token);
+  };
+
+  handleClick = async (e) => {
+    await this.fetchApi();
+    e.preventDefault();
+    const { name, email } = this.state;
+    const { dispatch, history } = this.props;
+    dispatch(loginAction({ email, name }));
+    history.push('/game');
+  };
+
   render() {
     const { name, email, isBtnDisabled } = this.state;
-    const { dispatch } = this.props;
     return (
-      <form>
+      <div>
         <input
           type="email"
           name="email"
@@ -49,17 +64,20 @@ class Login extends Component {
           type="submit"
           data-testid="btn-play"
           disabled={ isBtnDisabled }
-          onClick={ () => dispatch(loginAction({ email, name })) }
+          onClick={ this.handleClick }
         >
           Play
         </button>
-      </form>
+      </div>
     );
   }
 }
 
 Login.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default connect()(Login);
