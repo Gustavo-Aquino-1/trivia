@@ -7,8 +7,8 @@ import Login from './pages/Login';
 export default function App() {
   return (
     <Switch>
-      <Route exact path="/" component={Login} />
-      <Route exact path="/settings" component={Config} />
+      <Route exact path="/" component={ Login } />
+      <Route exact path="/settings" component={ Config } />
     </Switch>
   );
 }
