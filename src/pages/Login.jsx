@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import PropTypes from 'prop-types';
-import { loginAction } from '../redux/actions';
-import { setItem } from '../services/localStorageFuncs';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import PropTypes from "prop-types";
+import { loginAction } from "../redux/actions";
+import { setItem } from "../services/localStorageFuncs";
 
 class Login extends Component {
   state = {
-    email: '',
-    name: '',
+    email: "",
+    name: "",
     isBtnDisabled: true,
   };
 
@@ -28,9 +28,11 @@ class Login extends Component {
   };
 
   fetchApi = async () => {
-    const response = await fetch('https://opentdb.com/api_token.php?command=request');
+    const response = await fetch(
+      "https://opentdb.com/api_token.php?command=request"
+    );
     const { token } = await response.json();
-    setItem('token', token);
+    setItem("token", token);
   };
 
   handleClick = async (e) => {
@@ -39,8 +41,13 @@ class Login extends Component {
     const { name, email } = this.state;
     const { dispatch, history } = this.props;
     dispatch(loginAction({ email, name }));
-    history.push('/game');
+    history.push("/game");
   };
+
+  handleClick2 = () => {
+    const { history } = this.props;
+    history.push("/settings");
+  }
 
   render() {
     const { name, email, isBtnDisabled } = this.state;
@@ -50,24 +57,28 @@ class Login extends Component {
           type="email"
           name="email"
           data-testid="input-gravatar-email"
-          onChange={ this.handlerChange }
-          value={ email }
+          onChange={this.handlerChange}
+          value={email}
         />
         <input
           type="text"
           name="name"
           data-testid="input-player-name"
-          onChange={ this.handlerChange }
-          value={ name }
+          onChange={this.handlerChange}
+          value={name}
         />
         <button
           type="submit"
           data-testid="btn-play"
-          disabled={ isBtnDisabled }
-          onClick={ this.handleClick }
+          disabled={isBtnDisabled}
+          onClick={this.handleClick}
         >
           Play
         </button>
+        <button
+          data-testid="btn-settings"
+          onClick={this.handleClick2}
+        ></button>
       </div>
     );
   }
