@@ -1,14 +1,16 @@
-import React, { Component } from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
-import { loginAction } from "../redux/actions";
-import { setItem } from "../services/localStorageFuncs";
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import { loginAction } from '../redux/actions';
+import { setItem } from '../services/localStorageFuncs';
+import Loading from '../components/Loading';
 
 class Login extends Component {
   state = {
-    email: "",
-    name: "",
+    email: '',
+    name: '',
     isBtnDisabled: true,
+    loading: false,
   };
 
   validateInfo = () => {
@@ -29,57 +31,65 @@ class Login extends Component {
 
   fetchApi = async () => {
     const response = await fetch(
-      "https://opentdb.com/api_token.php?command=request"
+      'https://opentdb.com/api_token.php?command=request',
     );
     const { token } = await response.json();
-    setItem("token", token);
+    setItem('token', token);
   };
 
   handleClick = async (e) => {
-    await this.fetchApi();
     e.preventDefault();
+    this.setState({ loading: true });
+    await this.fetchApi();
+    this.setState({ loading: false });
     const { name, email } = this.state;
     const { dispatch, history } = this.props;
     dispatch(loginAction({ email, name }));
-    history.push("/game");
+    history.push('/game');
   };
 
   handleClick2 = () => {
     const { history } = this.props;
-    history.push("/settings");
-  }
+    history.push('/settings');
+  };
 
   render() {
-    const { name, email, isBtnDisabled } = this.state;
+    const { name, email, isBtnDisabled, loading } = this.state;
     return (
-      <div>
-        <input
-          type="email"
-          name="email"
-          data-testid="input-gravatar-email"
-          onChange={this.handlerChange}
-          value={email}
-        />
-        <input
-          type="text"
-          name="name"
-          data-testid="input-player-name"
-          onChange={this.handlerChange}
-          value={name}
-        />
-        <button
-          type="submit"
-          data-testid="btn-play"
-          disabled={isBtnDisabled}
-          onClick={this.handleClick}
-        >
-          Play
-        </button>
-        <button
-          data-testid="btn-settings"
-          onClick={this.handleClick2}
-        ></button>
-      </div>
+      <>
+        { loading && <Loading />}
+        <form>
+          <input
+            type="email"
+            name="email"
+            data-testid="input-gravatar-email"
+            onChange={ this.handlerChange }
+            value={ email }
+          />
+          <input
+            type="text"
+            name="name"
+            data-testid="input-player-name"
+            onChange={ this.handlerChange }
+            value={ name }
+          />
+          <button
+            type="submit"
+            data-testid="btn-play"
+            disabled={ isBtnDisabled }
+            onClick={ this.handleClick }
+          >
+            Play
+          </button>
+          <button
+            type="button"
+            data-testid="btn-settings"
+            onClick={ this.handleClick2 }
+          >
+            Configurações
+          </button>
+        </form>
+      </>
     );
   }
 }
