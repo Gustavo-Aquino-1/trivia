@@ -1,15 +1,24 @@
 import { TYPE_LOGIN } from '../actions/actionsTypes';
 
 const INITIAL_STATE = {
-  email: '',
-  name: '',
+  player: {
+    name: '',
+    assertions: 0,
+    score: 0,
+    gravatarEmail: '',
+  },
 };
 
 const loginReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
   case TYPE_LOGIN:
     return {
-      ...action.payload,
+      ...state,
+      player: {
+        ...state.player,
+        name: action.payload.name,
+        gravatarEmail: action.payload.email,
+      },
     };
   default:
     return state;
