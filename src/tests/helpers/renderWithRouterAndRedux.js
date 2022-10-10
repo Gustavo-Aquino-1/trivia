@@ -5,10 +5,10 @@ import { createMemoryHistory } from 'history';
 import { Provider } from 'react-redux';
 import {  legacy_createStore as createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import reducer from '../../redux/reducers';
+import loginReducer from '../../redux/reducers/loginReducer';
 
 export const renderWithRouterAndRedux = (component, initialState, route = '/') => {
-  const store = createStore(reducer, initialState, applyMiddleware(thunk));
+  const store = createStore(loginReducer, initialState, applyMiddleware(thunk));
   const history = createMemoryHistory({ initialEntries: [route] });
 
   return {
