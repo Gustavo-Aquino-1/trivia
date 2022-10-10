@@ -11,8 +11,8 @@ describe('Testando a página de login', () => {
     const btnPlay = screen.getByRole('button', { name: /play/i });
     const btnConfig = screen.getByRole('button', { name: /configurações/i });
     expect(inputs).toHaveLength(2);
-    expect(btnPlay).toBeInTheDocument();
-    expect(btnConfig).toBeInTheDocument();
+    expect(btnPlay).toBeDefined();
+    expect(btnConfig).toBeDefined();
   });
 
   it('Testa se redirecionado para as rotas certas', async () => {
@@ -20,7 +20,7 @@ describe('Testando a página de login', () => {
     const email = screen.getByTestId('input-gravatar-email');
     const name = screen.getByTestId('input-player-name');
     const btnPlay = screen.getByRole('button', { name: /play/i });
-    expect(btnPlay).toBeInTheDocument();
+    expect(btnPlay).toBeDefined();
     userEvent.type(email, 'robs@hotmail.com');
     userEvent.type(name, 'Robson');
     userEvent.click(btnPlay);

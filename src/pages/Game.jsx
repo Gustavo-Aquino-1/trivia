@@ -25,7 +25,6 @@ class Game extends Component {
     const token = getItem('token');
     let response = await fetch(`https://opentdb.com/api.php?amount=5&token=${token}`);
     response = await response.json();
-    console.log(response);
     this.setState({ questions: response.results }, this.questionRandom);
     const errorCode = 3;
     const { history } = this.props;
@@ -44,7 +43,7 @@ class Game extends Component {
         const { time } = this.state;
         if (time === 0) {
           clearInterval(idInterval);
-          this.setState({ isDisabled: true });
+          this.setState({ isDisabled: true, isClicked: true });
         }
       });
     }, second);
@@ -53,6 +52,22 @@ class Game extends Component {
   shuffle = (array = []) => {
     const numberRandom = 0.5;
     return array.slice().sort(() => Math.random() - numberRandom);
+  };
+
+  nextQuestion = () => {
+    const { index, questions } = this.state;
+    if (index < questions.length - 1) {
+      this.setState((state) => ({
+        index: state.index + 1,
+        time: 30,
+        isClicked: false,
+        isDisabled: false,
+        arrOptions: [],
+      }), this.questionRandom);
+    } else {
+      const { history } = this.props;
+      history.push('/feedback');
+    }
   };
 
   questionRandom = () => {
@@ -127,6 +142,15 @@ class Game extends Component {
                 );
               })}
             </div>
+            { isClicked && (
+              <button
+                type="button"
+                data-testid="btn-next"
+                onClick={ this.nextQuestion }
+              >
+                Next
+              </button>
+            )}
           </>
         )}
       </div>
