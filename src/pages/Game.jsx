@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import Header from '../components/Header';
 import { getItem } from '../services/localStorageFuncs';
 import '../styles/Game.css';
+import { attScoreAction } from '../redux/actions';
 
 class Game extends Component {
   state = {
@@ -62,8 +64,23 @@ class Game extends Component {
     this.setState({ arrOptions: this.shuffle(arrayQuestion) });
   };
 
-  handleClick = () => {
+  handleClick = (string, dificuldade) => {
     this.setState({ isClicked: true });
+    const { time } = this.state;
+    const { attScore } = this.props;
+    let points;
+    const initial = 10;
+    const hard = 3;
+    if (string === 'certa') {
+      if (dificuldade === 'easy') {
+        points = initial + (time * 1);
+      } else if (dificuldade === 'medium') {
+        points = initial + (time * 2);
+      } else {
+        points = initial + (time * hard);
+      }
+      attScore(points);
+    }
   };
 
   render() {
@@ -75,9 +92,9 @@ class Game extends Component {
         { questions.length > 0 && (
           <>
             <h2 data-testid="question-category">
-              { questions[index].category }
+              { `${questions[index].category}` }
             </h2>
-            <h3 data-testid="question-text">{questions[index].question }</h3>
+            <h3 data-testid="question-text">{`${questions[index].question}` }</h3>
             <div data-testid="answer-options">
               { arrOptions.map((question, i) => {
                 if (question === questions[index].correct_answer) {
@@ -86,11 +103,13 @@ class Game extends Component {
                       key={ i }
                       type="button"
                       data-testid="correct-answer"
-                      onClick={ this.handleClick }
+                      onClick={ () => {
+                        this.handleClick('certa', questions[index].difficulty);
+                      } }
                       className={ isClicked && 'correct' }
                       disabled={ isDisabled }
                     >
-                      { question }
+                      { `${question}` }
                     </button>
                   );
                 }
@@ -103,7 +122,7 @@ class Game extends Component {
                     className={ isClicked && 'incorrect' }
                     disabled={ isDisabled }
                   >
-                    { question }
+                    { `${question}` }
                   </button>
                 );
               })}
@@ -119,6 +138,11 @@ Game.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  attScore: PropTypes.func.isRequired,
 };
 
-export default Game;
+const mapDispatchToProps = (dispatch) => ({
+  attScore: (points) => dispatch(attScoreAction(points)),
+});
+
+export default connect(null, mapDispatchToProps)(Game);
