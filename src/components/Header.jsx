@@ -34,7 +34,6 @@ class Header extends Component {
   }
 }
 
-
 const mapStateToProps = ({ player }) => ({
   email: player.gravatarEmail,
   name: player.name,

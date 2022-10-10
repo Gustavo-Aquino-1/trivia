@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Header from '../components/Header';
 import { getItem } from '../services/localStorageFuncs';
+import '../styles/Game.css';
 
 class Game extends Component {
   state = {
     questions: [],
     index: 0,
+    isClicked: false,
   };
 
   async componentDidMount() {
@@ -37,8 +39,12 @@ class Game extends Component {
     return this.shuffle(arrayQuestion);
   };
 
+  handleClick = () => {
+    this.setState({ isClicked: true });
+  };
+
   render() {
-    const { questions, index } = this.state;
+    const { questions, index, isClicked } = this.state;
     return (
       <div>
         <Header />
@@ -56,6 +62,8 @@ class Game extends Component {
                       key={ i }
                       type="button"
                       data-testid="correct-answer"
+                      onClick={ this.handleClick }
+                      className={ isClicked && 'correct' }
                     >
                       { question }
                     </button>
@@ -66,6 +74,8 @@ class Game extends Component {
                     key={ i }
                     type="button"
                     data-testid="wrong-answer"
+                    onClick={ this.handleClick }
+                    className={ isClicked && 'incorrect' }
                   >
                     { question }
                   </button>
