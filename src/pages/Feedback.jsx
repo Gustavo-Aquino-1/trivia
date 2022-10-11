@@ -41,7 +41,6 @@ class Feedback extends Component {
       <>
         <Header />
         <div>
-          <p data-testid="feedback-text">Página de Feedback</p>
           <h3 data-testid="feedback-text">{message}</h3>
           <p data-testid="feedback-total-score">{score}</p>
           <p data-testid="feedback-total-question">{assertions}</p>
