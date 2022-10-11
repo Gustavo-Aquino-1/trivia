@@ -1,4 +1,4 @@
-import { TYPE_LOGIN, TYPE_ATT_SCORE } from '../actions/actionsTypes';
+import { TYPE_LOGIN, TYPE_ATT_SCORE, TYPE_CLEAN_SCORE } from '../actions/actionsTypes';
 
 const INITIAL_STATE = {
   player: {
@@ -27,6 +27,15 @@ const loginReducer = (state = INITIAL_STATE, action) => {
         ...state.player,
         score: state.player.score + action.payload,
         assertions: state.player.assertions + 1,
+      },
+    };
+  case TYPE_CLEAN_SCORE:
+    return {
+      player: {
+        name: '',
+        assertions: 0,
+        score: 0,
+        gravatarEmail: '',
       },
     };
   default:
