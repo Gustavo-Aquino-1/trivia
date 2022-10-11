@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { loginAction } from '../redux/actions';
+import { loginAction, actionCleanScore } from '../redux/actions';
 import { setItem } from '../services/localStorageFuncs';
 import Loading from '../components/Loading';
 
@@ -12,6 +12,11 @@ class Login extends Component {
     isBtnDisabled: true,
     loading: false,
   };
+
+  componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(actionCleanScore());
+  }
 
   validateInfo = () => {
     const { name, email } = this.state;
@@ -99,6 +104,11 @@ Login.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
+  // clean: PropTypes.func.isRequired,
 };
+
+// const mapDispatchToProps = (dispatch) => ({
+//   clean: () => dispatch(actionCleanScore()),
+// });
 
 export default connect()(Login);

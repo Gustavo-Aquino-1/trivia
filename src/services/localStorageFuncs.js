@@ -7,3 +7,5 @@ export const setItem = (key, value) => {
 };
 
 export const getItem = (key) => localStorage.getItem(key);
+
+export const getJSONItem = (key) => JSON.parse(localStorage.getItem(key));

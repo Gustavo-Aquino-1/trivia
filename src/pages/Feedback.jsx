@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
-import { actionCleanScore } from '../redux/actions';
+import { setItem, getJSONItem } from '../services/localStorageFuncs';
 
 class Feedback extends Component {
   state = {
@@ -11,7 +12,18 @@ class Feedback extends Component {
 
   componentDidMount() {
     this.messageStatus();
+    this.savePlayer();
   }
+
+  savePlayer = () => {
+    const { gravatarEmail, name, score } = this.props;
+    const hash = md5(gravatarEmail).toString();
+    const url = `https://www.gravatar.com/avatar/${hash}`;
+    const savePlayers = getJSONItem('ranking') || [];
+    const arrSort = [...savePlayers, { name, score, url }]
+      .sort((a, b) => +b.score - +a.score);
+    setItem('ranking', arrSort);
+  };
 
   messageStatus = () => {
     const { assertions } = this.props;
@@ -24,9 +36,8 @@ class Feedback extends Component {
   };
 
   handleClick = () => {
-    const { history: { push }, clean } = this.props;
+    const { history: { push } } = this.props;
     push('/');
-    clean();
   };
 
   toRankingPage = () => {
@@ -68,19 +79,18 @@ class Feedback extends Component {
 const mapStateToProps = ({ player }) => ({
   assertions: player.assertions,
   score: player.score,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  clean: () => dispatch(actionCleanScore()),
+  gravatarEmail: player.gravatarEmail,
+  name: player.name,
 });
 
 Feedback.propTypes = {
   assertions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  gravatarEmail: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
   history: PropTypes.shape({
     push: PropTypes.func,
   }).isRequired,
-  clean: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Feedback);
+export default connect(mapStateToProps)(Feedback);
