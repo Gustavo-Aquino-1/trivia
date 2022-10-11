@@ -29,6 +29,11 @@ class Feedback extends Component {
     clean();
   };
 
+  toRankingPage = () => {
+    const { history: { push } } = this.props;
+    push('/ranking');
+  };
+
   render() {
     const { message } = this.state;
     const { score, assertions } = this.props;
@@ -46,6 +51,14 @@ class Feedback extends Component {
             onClick={ this.handleClick }
           >
             Play Again
+          </button>
+
+          <button
+            type="button"
+            data-testid="btn-ranking"
+            onClick={ this.toRankingPage }
+          >
+            Ranking
           </button>
         </div>
       </>
