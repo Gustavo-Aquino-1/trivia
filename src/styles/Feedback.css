@@ -1,0 +1,42 @@
+.feed_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+  gap: 1.3em;
+}
+
+.btn_play_again {
+  display: flex;
+  align-items: center;
+}
+
+.btn_play_again .icon_feed {
+  font-size: 20px;
+}
+
+@media (min-width: 759px ) {
+  .feed_container {
+    margin-top: 3em;
+  }
+
+  .btn_play_again .icon_feed {
+    font-size: 40px;
+  }
+
+  .feed_container h3,p {
+    font-size: 2em;
+  }
+
+  .btn_play_again {
+    padding: 0.7em;
+    font-size: 1.5em;
+  }
+
+  .btn_play_again:hover {
+    background-color: rgb(83, 65, 100);
+    color: white;
+  }
+
+}

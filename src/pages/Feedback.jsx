@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { MdRestore } from 'react-icons/md';
+import { GiRank3 } from 'react-icons/gi';
 import PropTypes from 'prop-types';
 import md5 from 'crypto-js/md5';
 import Header from '../components/Header';
 import { setItem, getJSONItem } from '../services/localStorageFuncs';
+import '../styles/Feedback.css';
 
 class Feedback extends Component {
   state = {
@@ -51,24 +54,30 @@ class Feedback extends Component {
     return (
       <>
         <Header />
-        <div>
+        <div className="feed_container">
           <h3 data-testid="feedback-text">{message}</h3>
-          <p data-testid="feedback-total-score">{score}</p>
-          <p data-testid="feedback-total-question">{assertions}</p>
+          <p data-testid="feedback-total-score">{`Pontuação: ${score}`}</p>
+          <p data-testid="feedback-total-question">{`Acertos: ${assertions}`}</p>
           <button
+            className="btn_play_again"
             type="button"
             data-testid="btn-play-again"
             onClick={ this.handleClick }
           >
-            Play Again
+            <span className="icon_feed"><MdRestore /></span>
+            { ' ' }
+            <span style={ { marginLeft: 5 } }>Play Again</span>
           </button>
 
           <button
+            className="btn_play_again"
             type="button"
             data-testid="btn-ranking"
             onClick={ this.toRankingPage }
           >
-            Ranking
+            <span className="icon_feed"><GiRank3 /></span>
+            { ' ' }
+            <span style={ { marginLeft: 5 } }>Ranking</span>
           </button>
         </div>
       </>

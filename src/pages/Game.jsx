@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { GiCuckooClock } from 'react-icons/gi';
-import { TbPlayerTrackNext} from 'react-icons/tb';
+import { TbPlayerTrackNext } from 'react-icons/tb';
 import Header from '../components/Header';
 import { getItem } from '../services/localStorageFuncs';
 import '../styles/Game.css';
