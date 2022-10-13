@@ -1,10 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { GiCuckooClock } from 'react-icons/gi';
+import { TbPlayerTrackNext} from 'react-icons/tb';
 import Header from '../components/Header';
 import { getItem } from '../services/localStorageFuncs';
 import '../styles/Game.css';
 import { attScoreAction } from '../redux/actions';
+import Timer from '../archive/audio/timer.mp3';
+import right from '../archive/audio/resposta-certa.mp3';
+
+const audio = new Audio(Timer);
+const rightAudio = new Audio(right);
 
 class Game extends Component {
   state = {
@@ -14,11 +21,22 @@ class Game extends Component {
     arrOptions: [],
     isDisabled: false,
     time: 30,
+    transition: true,
   };
 
   async componentDidMount() {
-    await this.fetchApi();
     this.timer();
+    try {
+      audio.play();
+    } catch (e) {
+      console.log('Não foi possivel executar o audio');
+    }
+    await this.fetchApi();
+  }
+
+  componentWillUnmount() {
+    audio.pause();
+    audio.currentTime = 0;
   }
 
   fetchApi = async () => {
@@ -43,10 +61,11 @@ class Game extends Component {
         const { time } = this.state;
         if (time === 0) {
           clearInterval(idInterval);
-          this.setState({ isDisabled: true, isClicked: true });
+          this.setState({ isDisabled: true, isClicked: true, transition: false });
         }
       });
     }, second);
+    this.setState({ timerId: idInterval });
   };
 
   shuffle = (array = []) => {
@@ -63,7 +82,11 @@ class Game extends Component {
         isClicked: false,
         isDisabled: false,
         arrOptions: [],
+        transition: true,
       }), this.questionRandom);
+      this.timer();
+      audio.currentTime = 0;
+      audio.play();
     } else {
       const { history } = this.props;
       history.push('/feedback');
@@ -80,7 +103,12 @@ class Game extends Component {
   };
 
   handleClick = (string, dificuldade) => {
-    this.setState({ isClicked: true });
+    const { timerId } = this.state;
+    clearInterval(timerId);
+    audio.pause();
+    rightAudio.currentTime = 0;
+    rightAudio.play();
+    this.setState({ isClicked: true, isDisabled: true, transition: false });
     const { time } = this.state;
     const { attScore } = this.props;
     let points;
@@ -99,18 +127,29 @@ class Game extends Component {
   };
 
   render() {
-    const { questions, index, isClicked, arrOptions, isDisabled, time } = this.state;
+    const { questions,
+      index, isClicked, arrOptions, isDisabled, time, transition } = this.state;
     return (
-      <div>
+      <div className="content-container">
         <Header />
-        <p>{time}</p>
         { questions.length > 0 && (
           <>
-            <h2 data-testid="question-category">
-              { `${questions[index].category}` }
-            </h2>
-            <h3 data-testid="question-text">{`${questions[index].question}` }</h3>
-            <div data-testid="answer-options">
+            <div
+              className={ `info-questions ${transition && 'questions-info-animation'}` }
+            >
+              <h2 data-testid="question-category">
+                { `${questions[index].category}` }
+              </h2>
+              <h3 data-testid="question-text">{`${questions[index].question}` }</h3>
+            </div>
+            <div className="timer-container">
+              <div className="timer-icon"><GiCuckooClock /></div>
+              <p className="timer-second">{time}</p>
+            </div>
+            <div
+              data-testid="answer-options"
+              className={ `answer-options ${transition && 'questions-info-animation'}` }
+            >
               { arrOptions.map((question, i) => {
                 if (question === questions[index].correct_answer) {
                   return (
@@ -143,13 +182,16 @@ class Game extends Component {
               })}
             </div>
             { isClicked && (
-              <button
-                type="button"
-                data-testid="btn-next"
-                onClick={ this.nextQuestion }
-              >
-                Next
-              </button>
+              <div className="button-right">
+                <button
+                  type="button"
+                  data-testid="btn-next"
+                  onClick={ this.nextQuestion }
+                >
+                  <span className="next-icon"><TbPlayerTrackNext /></span>
+                  Next
+                </button>
+              </div>
             )}
           </>
         )}

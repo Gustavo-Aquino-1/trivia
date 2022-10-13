@@ -1,7 +1,127 @@
 .correct {
-  border: 3px solid rgb(6, 240, 15);
+  border: 3px solid #06f00f;
+  background-color: #06f00f;
+  color: #fff;
+  font-weight: 700;
+  animation: blink-animation 1s linear infinite;
 }
 
 .incorrect {
   border: 3px solid red;
+  background-color: red;
+  color: #fff;
+  font-weight: 700;
+}
+
+.info-questions {
+  color: #400080;
+  width: 95%;
+  position: relative;
+  padding: 10px 20px;
+  border: 8px ridge #ecec10;
+  border-radius: 0 20px 20px 0;
+  border-left: 0;
+  background-color: #ecec10;
+  transition: all 0.5s;
+  font-size: 0.8em;
+}
+
+.questions-info-animation {
+  animation: questions-info 0.5s;
+}
+
+@keyframes blink-animation {
+  0%{ background-color: white;}
+  100%{ background-color: #06f00f;}
+}
+
+@keyframes questions-info {
+  0% { transform: translateX(-100%);}
+  100% { transform: translateX(0); }
+}
+
+.content-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+/* Timer Style */
+
+.timer-container {
+  max-width: 150px;
+  width: 100%;
+  border-radius: 20px;
+  margin: 20px auto;
+  padding-bottom: 10px;
+  color: #ecec10;
+}
+
+.timer-icon {
+  font-size: 4em;
+  text-align: center;
+}
+
+.timer-second {
+  text-align: center;
+  font-size: 1.5em;
+}
+
+.answer-options {
+  display: flex;
+  flex-direction: column;
+  align-content: flex-end;
+  width: 100%;
+  transition: all 0.5s;
+  padding: 10px;
+}
+
+.button-right {
+  text-align: right;
+  width: 100%;
+  padding: 0 10px; 
+}
+
+.button-right button {
+  background-color: #ecec10;
+  border: 1px solid #ecec10;
+  color: #400080;
+  font-size: 0.9em;
+}
+
+@media(min-width: 758px){
+  .info-questions {
+    font-size: 1.3em;
+    word-wrap: break-word;
+  }
+
+  .answer-options button {
+    max-width: 800px;
+    width: 100%;
+    margin: 5px auto;
+    font-size: 1.3em;
+  }
+
+  .button-right {
+    text-align: center;
+    font-size: 1.5em;
+  }
+
+  .button-right button {
+    display: inline-flex;
+    align-items: center;
+    font-size: 0.8em;
+  }
+
+  button .next-icon{
+    font-size: 1.5em;
+  }
+
+  .timer-second {
+    text-align: center;
+    font-size: 2em;
+  }
+
+  .timer-icon {
+    font-size: 8em;
+  }
 }

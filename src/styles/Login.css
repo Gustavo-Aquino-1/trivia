@@ -1,0 +1,68 @@
+.form-content-container {
+  align-items: center;
+  background-color: #ecec10;
+  border-radius: 10px;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  left: 50%;
+  max-width: 300px;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+}
+
+.form-content-container .logo-icon {
+  color: #400080;
+  font-size: 8em;
+}
+
+.form-login {
+  color: #400080;
+  padding: 10px 20px;
+  padding-top: 20px;
+  position: relative;
+  text-align: center;
+}
+
+.form-login .error-message {
+  align-items: center;
+  color: red;
+  display: flex;
+  font-size: 0.8em;
+  justify-content: center;
+  width: 100%;
+}
+
+.form-login .icon-message {
+  font-size: 1.5em;
+}
+
+.form-login input {
+  border: 1px solid #555;
+  border-radius: 10px;
+  color: #400080;
+  margin: 5px 0;
+  outline: none;
+  padding: 10px;
+  width: 100%;
+}
+
+.form-login input::placeholder {
+  color: #8f39e4;
+}
+
+.form-login button {
+  background-color: transparent;
+  border: 1px solid transparent;
+  color: #400080;
+  font-size: 1.8em;
+  width: 120px;
+}
+
+.form-login [ data-testid = 'btn-settings' ] {
+  position: absolute;
+  right: -30px;
+  top: 5px;
+}
