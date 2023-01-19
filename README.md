@@ -1,10 +1,42 @@
-# :construction: README em construção ! :construction:
-<!-- Olá, Tryber!
-Esse é apenas um arquivo inicial para o README do seu projeto.
-É essencial que você preencha esse documento por conta própria, ok?
-Não deixe de usar nossas dicas de escrita de README de projetos, e deixe sua criatividade brilhar!
-:warning: IMPORTANTE: você precisa deixar nítido:
-- quais arquivos/pastas foram desenvolvidos por você; 
-- quais arquivos/pastas foram desenvolvidos por outra pessoa estudante;
-- quais arquivos/pastas foram desenvolvidos pela Trybe.
--->
+## Trivia 🎮
+
+Nesse site você poderá jogar e pontuar respondendo perguntas , apos o jogo você também tem a opção de ver seu ranking!!
+
+
+<details>
+  <summary>
+    Funcionalidades 
+  </summary>
+  
+  <ul>
+    <li>Responder perguntas e pontuar quantas vezes quiser</li>
+    <li>Ver o ranking de pontuação</li>
+  </ul>
+ </details>
+ 
+ 
+<details>
+  <summary>
+    Tecnologias ultizadas
+  </summary>
+  
+  <ul>
+    <li> React </li>
+    <li> Redux </li>
+  </ul>
+ </details>
+ 
+ <details>
+  <summary>
+    Desenvolvedores do site
+  </summary>
+  
+  <ul>
+    <li> Gustavo Aquino </li>
+    <li> Robson Narcizo </li>
+    <li> Guilherme Machado </li>
+    <li> Isaac Nickolas Elias do Rego </li>
+    <li> Leonardo Gabriel de Lara </li>
+    <li> Lucas Gomes Filgueiras Tavares </li>
+  </ul>
+ </details>
