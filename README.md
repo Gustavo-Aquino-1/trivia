@@ -1,6 +1,6 @@
 ## Trivia 🎮
 
-Nesse site você poderá jogar e pontuar respondendo perguntas , apos o jogo você também tem a opção de ver seu ranking!!
+Nesse site você poderá jogar e pontuar respondendo perguntas , após o jogo você também tem a opção de ver seu ranking!!
 
 
 <details>
